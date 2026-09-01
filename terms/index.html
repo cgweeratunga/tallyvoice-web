@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  TODO  -  Tally Voice Terms of Service
+  Grep for "BEFORE-PUBLISH", "BEFORE-LAUNCH" and "UNCONFIRMED".
+
+  Same two classes as the privacy policy, gating the same things:
+
+    BEFORE-PUBLISH  this page MUST NOT go live while any of these is open.
+    BEFORE-LAUNCH   a product/backend change. Does NOT block publishing this
+                    page - the page describes today's behaviour accurately -
+                    but MUST be done before the product is launched.
+
+  Sibling document: /privacy/. Its TODO block covers the data side and is not
+  repeated here. Item 13 there (the site-wide sticky header) applies to this
+  page too - that is why the TOC on this page is not sticky either.
+  ============================================================================
+
+  BLOCKING - unverified facts
+  ---------------------------------------------------------------------------
+  [x] T1. OPERATOR LEGAL ENTITY AND ABN - INFOLABS PTY LTD, ABN 61 615 110 346.
+          Same entity and same ABN as the privacy policy, confirmed 30 Aug 2026
+          against ABN Lookup; checksum validated. In section 1.
+          If any entity other than Infolabs Pty Ltd appears anywhere on this
+          page, it is a regression - fix it.
+
+  [x] T2. WHAT THE PRODUCT READS - verified 1 Sep 2026 against the tool
+          definitions in core/services/claude_qb.py. The tools that exist are
+          get_daily_briefing, list_bills_owed, list_customers, list_suppliers,
+          list_products_and_services, profit_and_loss and get_bas_due.
+          Section 2 lists exactly these and nothing more.
+
+  [x] T3. WHAT THE PRODUCT WRITES - verified 1 Sep 2026. Three write tools
+          exist: prepare_invoice_draft, prepare_customer_draft,
+          prepare_item_draft, each ending in a confirm step that calls
+          QuickBooks (core/services/invoicing.py:370 create_invoice, and the
+          equivalent in core/services/records.py).
+          The write capability is stated in the lead paragraph, in the summary
+          tiles, and in full in sections 2 and 3. It is deliberately NOT
+          buried: an earlier round of pages understated this and had to be
+          withdrawn. Do not move it further down the page.
+
+  [x] T4. DRAFT-AND-CONFIRM MECHANICS - verified 1 Sep 2026 in the code.
+          - Draft lifetime: core/models.py:180  DRAFT_TTL = timedelta(minutes=30)
+          - Confirmation phrases: core/services/invoicing.py:42 CONFIRM_PHRASES
+          - A bare "yes" is deliberately rejected: invoicing.py:37, and
+            is_confirm_phrase() at :61-70.
+
+          WORDING NOTE, read this before "correcting" section 3.
+          The brief said "confirmation checks a phrase rather than accepting a
+          bare yes". That is true of VOICE confirmation. It is not the whole
+          mechanism: in the app, confirming is a deliberate button tap, and
+          the phrase check does not apply (invoicing.py:338-340 - ``spoken``
+          is None for the app, where confirming is a button tap).
+          Section 3 therefore describes both doors separately, the same way
+          the privacy policy describes the two voice paths separately. This is
+          more accurate than the brief, not less - but it is a deviation from
+          what was asked for, so it is recorded here rather than made quietly.
+
+  [x] T5. BAS FIGURES - verified 1 Sep 2026. The BAS number is read from the
+          Balance Sheet's GST/BAS liability accounts ("GST payable", "BAS
+          suspense"), not from a TaxSummary report - core/services/claude_qb.py
+          lines 38-44 and 824-842. Section 5 says exactly that. It matters,
+          because a figure read off two liability accounts is an indication of
+          what is sitting in the books, not a computed BAS.
+
+  BLOCKING - set at publish time
+  ---------------------------------------------------------------------------
+  [x] T6. LAST UPDATED DATE - SET 1 Sep 2026, the publish date. The hero
+          reads "Last updated 1 September 2026". It replaced a deliberately
+          glaring "BEFORE-PUBLISH - set the publish date" placeholder, which
+          was there so this page could not go live with a plausible-looking
+          wrong date the way the privacy policy nearly did.
+          Section 10 tells readers this date is how they know whether the
+          terms have changed, so it is load-bearing, not decoration.
+          ON EVERY FUTURE EDIT: change it in the same commit. If a change is
+          significant - what the service does, what it writes, or what the
+          owner is responsible for - section 10 also promises an email to
+          account holders. Both, or section 10 becomes false.
+
+  UNCONFIRMED - does NOT block publishing. The unverified claim was left off
+  the page rather than written down and flagged, so there is nothing on this
+  page depending on the answer. Answer it to ADD a sentence, not to fix one.
+  ---------------------------------------------------------------------------
+  [ ] T7. "THE ASSISTANT TELLS OWNERS IT CANNOT SEND REMINDERS." Not found.
+          The brief stated that the assistant tells owners this and points
+          them at QuickBooks' own reminder settings. Searched 1 Sep 2026:
+          the string "remind" does not appear ANYWHERE in the pulsebooks
+          repository - not in the system prompt, not in a tool description,
+          not in a template. Zero matches, all file types.
+
+          So section 4 states the limitation, which is verified and true, and
+          points the READER at QuickBooks' reminder settings. It does not
+          claim the assistant volunteers this, because nothing found supports
+          that. If the behaviour does exist somewhere outside this repo, say
+          where and the sentence can be added.
+
+  MARKETING COPY - does not block this page. ESCALATES, see the last
+  paragraph of T8.
+  ---------------------------------------------------------------------------
+  [ ] T8. THE HOMEPAGE SELLS REMINDERS. THIS PAGE SAYS THEY DO NOT EXIST.
+          Both will be live on the same domain, one click apart.
+
+          DOWNGRADED 1 Sep 2026 from BLOCKING, on the product owner's word
+          that the homepage pricing tiers are placeholder copy: no plans have
+          been decided, none exist, and nobody has paid for anything. That
+          removes the sharp version of this - a feature sold inside a paid
+          plan that cannot be built - and leaves early-access marketing copy
+          that oversells the product on a site with no customers. Still wrong,
+          no longer a reason to withhold a page whose purpose is to describe
+          the product accurately. Publishing Terms improves this situation;
+          withholding it does nothing for the homepage.
+
+          index.html advertises reminders in four places:
+            :83   the phone demo's answer card has a "Prepare reminders" button
+            :137  feature 04 - "prepare approved reminders from your mobile"
+            :246  workflow step 4 - "Prepare reminders, reports, alerts"
+            :283  Business plan feature - "Prepared invoice reminders"
+          The app ships a dead button for it, by its own documentation:
+            pulsebooks-app/docs/USER_GUIDE.md:175 - "the button is on the home
+            screen but only says 'Reminders are coming soon'. It doesn't
+            contact anyone."
+
+          This is the same failure mode as understating the write capability,
+          pointed the other way: the marketing page promises something the
+          product cannot do. Section 4 is correct and MUST NOT be softened to
+          make the homepage true - Terms describes what exists. Fix the
+          homepage, or build reminders. Until one of those happens, a reader
+          who compares the two pages finds the product page overselling and
+          the terms correcting it.
+
+          THIS GOES BACK TO BLOCKING THE MOMENT PRICING BECOMES REAL.
+          The downgrade rests entirely on there being no paid plans and no
+          customers. If a plan is published that lists reminders as an
+          included feature - or if anyone is charged for a tier whose copy
+          mentions them - this stops being marketing overreach and becomes a
+          paid-for feature that does not exist. At that point it is blocking
+          again, and it blocks the pricing page, not this one. Whoever sets
+          pricing needs to see this item before the tiers go live.
+
+  NOT BLOCKING - noticed while verifying, worth someone's attention
+  ---------------------------------------------------------------------------
+  [ ] T9. USER_GUIDE.md CONTRADICTS THE PUBLISHED PRIVACY POLICY.
+          pulsebooks-app/docs/USER_GUIDE.md:177 says "Chat history - the
+          conversation is gone when you leave the chat screen or sign out.
+          Nothing is saved between sessions."
+          /privacy/ section 7 says messages are stored and kept for 365 days,
+          verified against purge_chat_history. Those cannot both be true.
+          The privacy policy was checked against the code and the guide was
+          not, so the guide is the likely stale one - but it is a user-facing
+          document making a retention claim, and it should be corrected rather
+          than left to contradict the policy.
+
+  ADDITIONS - not in the brief, flagged so they can be struck
+  ---------------------------------------------------------------------------
+  [x] T10. Two sentences here were not asked for. Both are the minimum that
+           makes a listed item mean anything, and neither invents a legal
+           structure:
+           - Section 1, one sentence: using the service means accepting these
+             terms. Without it the document states rules that bind nobody.
+             The privacy policy carries the equivalent line in its section 5.
+           - Section 8, one sentence: we may suspend an account being used to
+             break the law or to reach books the user has no right to.
+             Acceptable use with no consequence attached is decoration.
+           Strike either if unwanted. Nothing else on this page is unrequested.
+
+  [x] T11. DELIBERATELY ABSENT, per the brief: no pricing or billing terms
+           (nothing is charged yet), no imported warranty disclaimer, no
+           arbitration clause, no indemnity, no limitation-of-liability
+           section. If a lawyer later asks for any of these, that is a real
+           decision to make - not an omission to quietly fix.
+-->
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Terms of Service for TallyVoice.ai: what the assistant does, what it writes to your QuickBooks, what it cannot do, and where its limits are." />
+  <title>Terms of Service | TallyVoice.ai</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/legal.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="TallyVoice.ai home">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </span>
+        <span class="brand-name">TallyVoice<span>.ai</span></span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="/#features">Features</a>
+        <a href="/#use-cases">Use cases</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#faq">FAQ</a>
+        <a class="nav-cta" href="/#early-access">Join early access</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="legal-hero section-dark">
+        <div class="container">
+          <div class="eyebrow"><span></span> Tally Voice</div>
+          <h1>Terms of Service</h1>
+          <p>These terms explain what Tally Voice does, what it writes to your QuickBooks, what it cannot do, and where its limits are. Like the privacy policy, it is written to be read, not filed.</p>
+          <div class="legal-meta">
+            <span>Last updated <strong>1 September 2026</strong></span>
+            <span>Applies to <strong>the Tally Voice mobile app and the Tally Voice Telegram bot</strong></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="legal-body">
+        <div class="container legal-grid">
+          <aside class="legal-toc" aria-label="On this page">
+            <strong>On this page</strong>
+            <ol>
+              <li><a href="#who">Who we are</a></li>
+              <li><a href="#what-it-does">What Tally Voice does</a></li>
+              <li><a href="#writes">How it writes to QuickBooks</a></li>
+              <li><a href="#cannot">What it cannot do</a></li>
+              <li><a href="#limits">It can be wrong, and it is not your accountant</a></li>
+              <li><a href="#account">Your account</a></li>
+              <li><a href="#connection">Your QuickBooks connection</a></li>
+              <li><a href="#acceptable">Using it properly</a></li>
+              <li><a href="#service-changes">Changes to the service</a></li>
+              <li><a href="#terms-changes">Changes to these terms</a></li>
+              <li><a href="#privacy">Your information</a></li>
+              <li><a href="#law">Which law applies</a></li>
+              <li><a href="#contact">Contact us</a></li>
+            </ol>
+          </aside>
+
+          <div class="legal-content">
+            <p class="lead">Tally Voice answers questions about your QuickBooks accounts in plain English, by typing or by speaking. It also writes to them: it can create invoices, customers, and products and services. Nothing reaches QuickBooks until you confirm it.</p>
+
+            <div class="legal-summary">
+              <div><small>What it reads</small><span>Your QuickBooks data, live, to answer questions &mdash; section 2</span></div>
+              <div><small>What it writes</small><span>Invoices, customers, products. Always draft first &mdash; section 3</span></div>
+              <div><small>What it is not</small><span>Not an accountant. Nothing it says is advice &mdash; section 5</span></div>
+              <div><small>Your information</small><span>Covered by the privacy policy &mdash; section 11</span></div>
+            </div>
+
+            <h2 id="who">1. Who we are</h2>
+            <!-- Entity and ABN confirmed 30 Aug 2026 against ABN Lookup:
+                 INFOLABS PTY LTD, ABN 61 615 110 346, Australian Private Company,
+                 active since 30 Sep 2016, main business location QLD.
+                 ABN checksum verified. Same entity as the privacy policy. -->
+            <p>Tally Voice is operated by Infolabs Pty Ltd (ABN 61 615 110 346), an Australian company. These terms are the agreement between you and us about how you use it.</p>
+            <p>By using Tally Voice, you accept these terms. If you do not accept them, do not use it.</p>
+            <p>These terms cover the Tally Voice mobile app and the Tally Voice Telegram bot. They do not cover QuickBooks itself. Your relationship with Intuit is governed by Intuit's own terms, not by these.</p>
+
+            <h2 id="what-it-does">2. What Tally Voice does</h2>
+            <p>Tally Voice connects to your QuickBooks Online company and answers questions about it. You reach it through the mobile app or through the Telegram bot, and you can type or speak.</p>
+
+            <h3>It reads your books</h3>
+            <p>Every figure it quotes is fetched from QuickBooks at the moment you ask. It can tell you:</p>
+            <ul>
+              <li>your cash position, and what your day looks like in a single briefing;</li>
+              <li>who owes you money, and how much is outstanding;</li>
+              <li>your customer and supplier lists;</li>
+              <li>the bills you owe;</li>
+              <li>your products and services;</li>
+              <li>your profit and loss; and</li>
+              <li>your BAS amount and when it is due.</li>
+            </ul>
+
+            <h3>It also writes to your books</h3>
+            <p>This is the part to read twice, because it is easy to assume an assistant only looks things up. Tally Voice can <strong>create records in your QuickBooks company</strong>. Specifically, it can create:</p>
+            <ul>
+              <li><strong>invoices</strong>, with a customer and line items;</li>
+              <li><strong>customers</strong>, with the contact details you give it; and</li>
+              <li><strong>products and services</strong>.</li>
+            </ul>
+            <p>These are real records in your real books. An invoice created this way is a QuickBooks invoice like any other. Section 3 explains the step that stands between the assistant proposing one and it existing.</p>
+
+            <h2 id="writes">3. How it writes to QuickBooks</h2>
+            <p>Every write goes through the same two steps, and the second one is yours. The assistant <em>proposes</em>. You <em>confirm</em>. Only then does anything reach QuickBooks.</p>
+            <p>When you ask for an invoice, a customer or a product, the assistant does not create it. It prepares a draft and shows it back to you &mdash; the customer, the line items, the quantities, the prices, the total. Nothing has been sent anywhere at that point. If you do nothing, nothing happens.</p>
+
+            <div class="legal-callout">
+              <h3>Confirming in the app</h3>
+              <p>You tap the confirm button on the draft card. It is a deliberate tap on a specific draft, so there is no ambiguity about what you agreed to.</p>
+            </div>
+
+            <div class="legal-callout">
+              <h3>Confirming by voice</h3>
+              <p>You have to say a confirming word &mdash; "confirm", or something that contains it. <strong>A bare "yes" is not enough, on purpose.</strong> "Yes" is the easiest thing to say by accident, and in a voice conversation it can be an answer to something else entirely. Creating an invoice in someone's books is the least undoable thing the assistant does, so it asks for a word you would only say if you meant it.</p>
+            </div>
+
+            <p><strong>A draft expires after 30 minutes.</strong> If you leave it and come back later, it has lapsed and nothing was created. Ask again and you will get a fresh draft.</p>
+            <p>You are responsible for what you confirm. Read the draft before you confirm it &mdash; the figures in it came from what you said, and the assistant can mishear or misunderstand you.</p>
+
+            <h2 id="cannot">4. What it cannot do</h2>
+            <p>One thing owners ask for often enough that it belongs in writing.</p>
+
+            <h3>It cannot send payment reminders</h3>
+            <p><strong>Tally Voice cannot chase your customers for you.</strong> It can tell you who owes you money and how overdue they are, but it cannot send a reminder, and it has no way to.</p>
+            <p>The reason is in QuickBooks Online rather than in us: its API has no operation for sending a payment reminder. Re-sending the invoice is the nearest thing available, and re-sending an invoice is not a reminder &mdash; it is the same document arriving twice, which reads to a customer as an error rather than a nudge.</p>
+            <p>If you want automatic reminders, QuickBooks has its own reminder settings and they work well. Set them up there.</p>
+
+            <h2 id="limits">5. It can be wrong, and it is not your accountant</h2>
+            <p>Tally Voice reads live figures from your books, so what it tells you is grounded in real data rather than guesswork. That is the honest case for trusting it. Here is the honest case against relying on it.</p>
+            <p>It is software, and it can be wrong. It can misread a question, pull a figure from the wrong period, mishear a word in a noisy room, or give a confident answer built on a number that was miscoded in QuickBooks months ago. It has no way of knowing that something in your books is wrong; it can only read what is there.</p>
+            <p><strong>Tally Voice is not an accountant, a bookkeeper or a registered tax agent, and nothing it says is financial, tax or legal advice.</strong> It does not know your circumstances, it is not qualified to advise you, and it is not a substitute for someone who is. If a decision matters, check it with your accountant.</p>
+            <p>What that means in practice: <strong>you remain responsible for what goes into your books and for what you lodge.</strong> An invoice you confirmed is your invoice. A figure you acted on is your decision. If something the assistant produced is wrong and you confirmed it, the record in QuickBooks is yours to correct.</p>
+
+            <div class="legal-callout">
+              <h3>BAS figures in particular</h3>
+              <p>When Tally Voice tells you your BAS amount, it is reading the GST and BAS liability accounts on your Balance Sheet &mdash; "GST payable" and "BAS suspense" &mdash; and telling you what is sitting in them. That is a useful indication of where you stand, and it is not a calculated BAS.</p>
+              <p>It does not check that your transactions are coded correctly, and it cannot know about anything that has not reached your books yet. <strong>It is an aid to help you see what is coming. It is not a lodgment, and it is not a substitute for preparing one.</strong> Lodge from your accounting records, with your accountant or agent if you use one.</p>
+            </div>
+
+            <h2 id="account">6. Your account</h2>
+            <p>Your account is yours. One account per person &mdash; do not share a login with someone else, and do not use someone else's.</p>
+            <p>Keep your password to yourself. We store it in a scrambled form and cannot read it, which means we also cannot recover it for you, and anyone who has it can see everything in your account.</p>
+            <p>If you think someone else has your password, or that your account has been used by someone who should not have it, tell us straight away at <a href="mailto:hello@tallyvoice.ai">hello@tallyvoice.ai</a>.</p>
+            <p>One practical warning, because it catches people out: if you connect Tally Voice to a Telegram account that other people can reach, then everyone who can reach that account can see your conversation and the figures in it. The privacy policy sets this out in more detail.</p>
+
+            <h2 id="connection">7. Your QuickBooks connection</h2>
+            <p>You connect QuickBooks yourself, through Intuit. You log in to Intuit, and Intuit asks you whether to give Tally Voice access. We never see your QuickBooks password.</p>
+            <p>That authorisation is yours to withdraw. <strong>You can revoke our access from inside QuickBooks at any time</strong>, without asking us and without our involvement. The moment you do, Tally Voice can no longer read your books or write to them.</p>
+            <p>You need the right to connect the company you connect. If the books belong to a business you do not run, get the owner's authority before you connect them.</p>
+
+            <h2 id="acceptable">8. Using it properly</h2>
+            <p>Two rules, and they are the obvious ones.</p>
+            <ul>
+              <li><strong>Do not use Tally Voice to break the law.</strong></li>
+              <li><strong>Do not use it to reach books you have no right to see.</strong></li>
+            </ul>
+            <p>If an account is being used for either of those, we may suspend it.</p>
+
+            <h2 id="service-changes">9. Changes to the service</h2>
+            <p>Tally Voice is still being built, and it will change. We may add features, change how something works, or stop offering part of it. We may also discontinue the service.</p>
+            <p>If we discontinue it, or remove something you rely on, we will tell account holders by email. We will not simply switch it off and let you find out.</p>
+
+            <h2 id="terms-changes">10. Changes to these terms</h2>
+            <p>When we change these terms, the change appears on this page and the "last updated" date at the top changes with it. That date is how you can tell whether anything has moved since you last read it.</p>
+            <p>Where a change is significant &mdash; something that alters what the service does, what it writes, or what you are responsible for &mdash; we will also email account holders directly, so that you are not relying on noticing a date.</p>
+
+            <h2 id="privacy">11. Your information</h2>
+            <p>Everything about what we store, where it is kept, who else sees it, how long we keep it and how you delete it is in the <a href="/privacy/">privacy policy</a>. It is a separate document because it answers a different question, and it is worth reading in full.</p>
+            <p>The short version: your conversation is stored in our own database in Sydney, your books are not copied to us, and you can clear your history from the app whenever you like.</p>
+
+            <h2 id="law">12. Which law applies</h2>
+            <p>These terms are governed by the law of Queensland and of Australia. If there is a dispute we cannot resolve between us, it goes to the courts of Queensland.</p>
+
+            <h2 id="contact">13. Contact us</h2>
+            <p>For anything in these terms &mdash; a question, a problem, or something that does not read right &mdash; email <a href="mailto:hello@tallyvoice.ai">hello@tallyvoice.ai</a>.</p>
+            <p>We aim to respond within a few business days.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="/">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span class="brand-name">TallyVoice<span>.ai</span></span>
+        </a>
+        <p>AI voice intelligence for Australian SMEs.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#faq">FAQ</a>
+        <a href="mailto:hello@tallyvoice.ai">hello@tallyvoice.ai</a>
+      </div>
+      <div class="footer-legal">
+        <p>&copy; <span id="current-year"></span> Infolabs Pty Ltd. All rights reserved.</p>
+        <p>QuickBooks and Xero are trademarks of their respective owners. TallyVoice.ai is independent and is not endorsed by either provider.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/script.js"></script>
+</body>
+</html>
