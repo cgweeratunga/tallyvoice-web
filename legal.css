@@ -24,12 +24,6 @@
  *               spacing, auto-fit for the summary grid, and a wrapping flex
  *               sidebar for the TOC — so there is nothing left to override.
  *
- *   STICKY TOC  deliberately NOT sticky. .page-shell sets overflow:hidden,
- *               which makes it the containing block for sticky descendants,
- *               so position:sticky silently does nothing inside it. See TODO
- *               item 13 — fixing that is a global change and does not belong
- *               in the same commit as a new legal page.
- *
  *   ADDED       .container, .section-dark. The ported markup uses them and
  *               this site's styles.css does not define them. .container
  *               matches the .section-pad gutter exactly so the legal page
