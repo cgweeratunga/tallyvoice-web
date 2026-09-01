@@ -1,0 +1,236 @@
+/* legal.css — Tally Voice legal pages (privacy, and terms when it is written)
+ *
+ * Ported 1 Sep 2026 from a draft written against a different site's palette.
+ * What changed in the port, and why:
+ *
+ *   PALETTE     mapped onto this site's tokens. The source used --teal,
+ *               --teal-dark and --text; this site has none of those, so:
+ *               --teal -> --green, --teal-dark -> --green-dark,
+ *               --text -> --ink.
+ *
+ *   TYPE        h1/h2 sized deliberately BELOW the marketing scale. The
+ *               homepage h1 is clamp(3.6rem, 7.2vw, 6.7rem) and its h2 is
+ *               clamp(2.3rem, 4.6vw, 4.4rem). A privacy policy should not
+ *               out-shout the product page it is linked from.
+ *
+ *   FONT        the source hardcoded `Inter, Aptos, "Segoe UI", Arial` on
+ *               h1/h2/h3. That is a different fallback stack from the one
+ *               body already sets, so on any machine without Inter the
+ *               headings and the body text diverged. Removed; headings now
+ *               inherit from body like every other heading on the site.
+ *
+ *   BREAKPOINTS the source carried six media-query overrides. They are gone.
+ *               The base rules are fluid instead — clamp() for type and
+ *               spacing, auto-fit for the summary grid, and a wrapping flex
+ *               sidebar for the TOC — so there is nothing left to override.
+ *
+ *   STICKY TOC  deliberately NOT sticky. .page-shell sets overflow:hidden,
+ *               which makes it the containing block for sticky descendants,
+ *               so position:sticky silently does nothing inside it. See TODO
+ *               item 13 — fixing that is a global change and does not belong
+ *               in the same commit as a new legal page.
+ *
+ *   ADDED       .container, .section-dark. The ported markup uses them and
+ *               this site's styles.css does not define them. .container
+ *               matches the .section-pad gutter exactly so the legal page
+ *               lines up with the marketing page.
+ */
+
+/* --- shared layout helpers this site does not already have --------------- */
+
+.container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.section-dark {
+  background: var(--navy);
+  color: #fff;
+}
+
+/* --- hero ---------------------------------------------------------------- */
+
+.legal-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(104px, 12vw, 170px) 0 clamp(56px, 6vw, 90px);
+}
+
+.legal-hero::before {
+  content: "";
+  position: absolute;
+  width: 620px;
+  height: 620px;
+  right: -200px;
+  top: -60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(29, 138, 105, 0.22), transparent 65%);
+}
+
+.legal-hero .container { position: relative; z-index: 2; }
+
+.legal-hero .eyebrow { color: var(--lime); }
+
+.legal-hero h1 {
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0 0 22px;
+  max-width: 760px;
+}
+
+.legal-hero p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(16px, 1.6vw, 19px);
+  max-width: 660px;
+  margin: 0;
+}
+
+.legal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.legal-meta strong { color: #fff; font-weight: 700; }
+
+/* --- body: wrapping sidebar, no breakpoints ------------------------------ */
+
+.legal-body { padding: clamp(56px, 7vw, 88px) 0 clamp(64px, 8vw, 104px); }
+
+/* Flex rather than a 250px/1fr grid: when the content's basis no longer
+   fits, the row wraps on its own and the TOC takes the full width above it.
+   That is what removes the 940px breakpoint. */
+.legal-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: clamp(32px, 5vw, 80px);
+}
+
+.legal-toc { flex: 1 1 220px; }
+
+.legal-toc strong {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.legal-toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+.legal-toc li { counter-increment: toc; border-top: 1px solid var(--line); }
+
+.legal-toc a {
+  display: flex;
+  gap: 12px;
+  padding: 11px 0;
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.legal-toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  color: var(--green-dark);
+  font-weight: 700;
+  font-size: 12px;
+  padding-top: 2px;
+}
+
+.legal-toc a:hover { color: var(--ink); }
+
+/* flex:999 makes the content take the row whenever it can, and forces the
+   wrap when it cannot fit its 560px basis. */
+.legal-content { flex: 999 1 min(100%, 560px); max-width: 720px; }
+
+.legal-content > p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--ink);
+  margin: 0 0 20px;
+}
+
+.legal-content .lead {
+  font-size: clamp(17px, 1.7vw, 19px);
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+
+.legal-content h2 {
+  font-size: clamp(21px, 2.2vw, 26px);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: clamp(40px, 4vw, 56px) 0 18px;
+  scroll-margin-top: 110px;
+}
+
+.legal-content h2:first-of-type { margin-top: 0; }
+
+.legal-content h3 {
+  font-size: clamp(17px, 1.7vw, 19px);
+  line-height: 1.35;
+  color: var(--ink);
+  margin: 34px 0 12px;
+}
+
+.legal-content ul { margin: 0 0 20px; padding-left: 22px; }
+.legal-content li { font-size: 17px; line-height: 1.7; color: var(--ink); margin-bottom: 9px; }
+.legal-content li::marker { color: var(--green-dark); }
+
+.legal-content a:not(.button) {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid var(--green);
+}
+
+.legal-content a:not(.button):hover { color: var(--green-dark); }
+.legal-content strong { font-weight: 700; color: var(--ink); }
+
+/* --- callouts ------------------------------------------------------------ */
+
+.legal-callout {
+  background: var(--mint);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: clamp(20px, 2.4vw, 28px);
+  margin: 28px 0;
+}
+
+.legal-callout h3 { margin-top: 0; }
+.legal-callout p { font-size: 16px; line-height: 1.7; color: var(--ink); margin: 0 0 12px; }
+.legal-callout > :last-child { margin-bottom: 0; }
+
+/* --- summary tiles: auto-fit, so no 680px breakpoint --------------------- */
+
+.legal-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin: 0 0 44px;
+}
+
+.legal-summary div { background: var(--white); padding: 18px 20px; }
+.legal-summary small {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.legal-summary span { font-size: 14px; line-height: 1.5; color: var(--ink); font-weight: 600; }
