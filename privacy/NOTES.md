@@ -151,6 +151,12 @@ filed beside item 13, the sticky-header item it refers to.
          when done. NO turnaround time is promised anywhere in the policy -
          do not add one unless it is a commitment you can keep.
          Still worth building a self-serve flow. No longer blocking.
+
+         UPDATE 24 Sep 2026: the self-serve flow now exists (in-app Profile ->
+         Delete account, and app.tallyvoice.ai/account/delete/). Section 8 was
+         rewritten to say so, and the hand-deletion promise is now only the
+         fallback for people who cannot log in. The "no delete_account view"
+         verification above is stale.
 ```
 
 ## SECURITY - not a policy item. Must not get lost.
@@ -358,6 +364,23 @@ not sticky. If item 13 is fixed, or if someone adds `position: sticky` back to
 ```
 
 ---
+
+## OPERATIONS - restoring from a backup
+
+**A restore brings deleted accounts back.** Backups are weekly and destroyed
+after 28 days (policy section 9), and the policy says we do not restore
+individual deleted accounts from them. But a restore of the whole database
+restores whatever was in it, including accounts deleted inside the retention
+window. There is no process that re-deletes them.
+
+Whoever runs a restore has to handle that by hand: list the accounts deleted
+since the backup was taken and delete them again with `delete_account()`
+(core/services/account.py), which also revokes the Intuit grant and purges the
+admin log rows. There is no record of who was deleted (deliberately, no audit
+row), so this list has to come from somewhere outside the database: support
+emails, or the web/app deletion requests. Until a way of keeping that list
+exists, treat a restore as a privacy incident for anyone deleted in the last
+28 days.
 
 ## Verification record — entity and ABN
 

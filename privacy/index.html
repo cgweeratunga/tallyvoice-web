@@ -40,8 +40,8 @@
           <h1>Privacy Policy</h1>
           <p>This policy explains what Tally Voice stores, where that information goes, how long we keep it and how you delete it. It is written to be read, not filed.</p>
           <div class="legal-meta">
-            <span>Last updated <strong>1 September 2026</strong></span>
-            <span>Applies to <strong>the Tally Voice mobile app and the Tally Voice Telegram bot</strong></span>
+            <span>Last updated <strong>24 September 2026</strong></span>
+            <span>Applies to <strong>the Tally Voice mobile app, the Tally Voice Telegram bot and the Tally Voice web dashboard</strong></span>
           </div>
         </div>
       </section>
@@ -79,7 +79,7 @@
 
             <h2 id="who">1. Who we are</h2>
             <p>Tally Voice is operated by Infolabs Pty Ltd (ABN 61 615 110 346), an Australian company. We are the ones who decide what happens to the information described in this policy, and we are the ones you contact about it.</p>
-            <p>This policy covers the Tally Voice mobile app and the Tally Voice Telegram bot. It does not cover QuickBooks itself. Once you are inside QuickBooks, Intuit's own privacy terms apply to what happens there.</p>
+            <p>This policy covers the Tally Voice mobile app, the Tally Voice Telegram bot and the Tally Voice web dashboard at app.tallyvoice.ai, including its account-deletion page. It does not cover QuickBooks itself. Once you are inside QuickBooks, Intuit's own privacy terms apply to what happens there.</p>
 
             <h2 id="stored">2. What we store</h2>
             <p>Every time you ask Tally Voice a question &mdash; in the app or through the Telegram bot &mdash; we store four things:</p>
@@ -97,7 +97,7 @@
 
             <h3>Your QuickBooks connection</h3>
             <p>When you connect QuickBooks we store the identifier of your QuickBooks company and the access tokens that let us fetch figures on your behalf.</p>
-            <p>We are going to be exact about how those tokens are protected rather than reach for a reassuring phrase. They are held in our database. That database is not reachable from the internet &mdash; it accepts connections only from the application running on the same server. And you can revoke our access from inside QuickBooks at any time, which makes the stored tokens useless the moment you do it. That revocation is the strongest control here, it is entirely in your hands, and it does not depend on us.</p>
+            <p>We are going to be exact about how those tokens are protected rather than reach for a reassuring phrase. They are held in our database, encrypted at rest. That database is not reachable from the internet &mdash; it accepts connections only from the application running on the same server. And you can revoke our access from inside QuickBooks at any time, which makes the stored tokens useless the moment you do it. That revocation is the strongest control here, it is entirely in your hands, and it does not depend on us.</p>
 
             <h3>Your Telegram link</h3>
             <p>If you connect Telegram we store your Telegram chat ID and user ID, your Telegram username and your first name, so the bot knows which account is asking. The codes used to set up that link are short-lived and expire ten minutes after they are generated.</p>
@@ -116,7 +116,7 @@
             <p>Every figure Tally Voice quotes is fetched live from QuickBooks at the moment you ask. There is no copy of your ledger, your invoices or your accounts sitting in our database. When you stop asking questions, nothing about your books remains on our side.</p>
             <p>Two honest qualifications, and the second is the larger one.</p>
             <p><strong>First</strong>, because we store the assistant's replies, a stored reply can contain a figure &mdash; for example, "your outstanding receivables are $42,300". That figure was accurate at the moment it was written, and it is stored as part of the conversation.</p>
-            <p><strong>Second</strong>, when the assistant prepares a draft, the contents of that draft are written to our database. For a draft invoice that means <strong>your customer's name, the description of each line, the quantities, the prices and the total</strong>. For a draft new customer it means whatever contact details were dictated for that person &mdash; their name, and their email address, phone number or address if those were given. That is real information from, or on its way to, your books, sitting in our database. As set out in section 7, <strong>those rows are kept indefinitely</strong> &mdash; confirming, cancelling or abandoning a draft does not remove it.</p>
+            <p><strong>Second</strong>, when the assistant prepares a draft, the contents of that draft are written to our database. For a draft invoice that means <strong>your customer's name, the description of each line, the quantities, the prices and the total</strong>. For a draft new customer it means whatever contact details were dictated for that person &mdash; their name, and their email address, phone number or address if those were given. That is real information from, or on its way to, your books, sitting in our database. As set out in section 7, <strong>those rows are kept until you delete your account</strong> &mdash; confirming, cancelling or abandoning a draft does not remove it.</p>
             <p>So both of these are true at once, and we would rather write the second one down than have you discover it: we hold no copy of your ledger and nothing copies your books across to us in the background &mdash; and it is not the case that nothing from your books is stored here.</p>
 
             <h3>We never keep a recording of your voice</h3>
@@ -153,6 +153,9 @@
             <h3>OpenAI &mdash; reading answers aloud</h3>
             <p>When the assistant speaks a reply to you, the text of that reply is sent to OpenAI, which turns it into speech.</p>
 
+            <h3>OpenAI &mdash; transcribing Telegram voice notes</h3>
+            <p>When you send a voice note to the Telegram bot, the audio is sent to OpenAI, which turns it into text. We keep the text; we do not keep the audio.</p>
+
             <h3>Google or OpenAI &mdash; live voice conversations</h3>
             <p>For live voice conversations, your audio is streamed to either Google (Gemini Live) or OpenAI, depending on which voice mode you have chosen. As above, the audio is streamed and discarded rather than recorded.</p>
 
@@ -178,30 +181,49 @@
               <li>your QuickBooks connection, for as long as it stays connected; and</li>
               <li>your Telegram link, for as long as it stays linked.</li>
             </ul>
-            <p><strong>Kept indefinitely: draft cards.</strong> When the assistant prepares a draft invoice, a draft customer or a draft product, the contents of that draft are stored and they stay stored. Confirming it, cancelling it, or leaving it until it lapses does not delete the record &mdash; it only changes the status noted against it. Clearing your chat history does not remove it, and the daily 365-day job does not touch it. We are stating this plainly because both "draft" and "expired" sound like something temporary, and in our database neither is.</p>
+            <p><strong>Kept until your account is deleted: draft cards.</strong> When the assistant prepares a draft invoice, a draft customer or a draft product, the contents of that draft are stored and they stay stored. Confirming it, cancelling it, or leaving it until it lapses does not delete the record &mdash; it only changes the status noted against it. Clearing your chat history does not remove it, and the daily 365-day job does not touch it. Only deleting your account removes it (section 8). We are stating this plainly because both "draft" and "expired" sound like something temporary, and in our database neither is.</p>
 
             <h2 id="delete">8. How to delete it</h2>
             <p>Open the app and go to <strong>Profile &rarr; Clear chat history</strong>.</p>
             <p>That is the whole process for your conversation. It happens immediately, it is permanent, and it covers both the app and Telegram &mdash; because they are the same conversation. You do not need to email us, raise a support request or wait for anyone to action it.</p>
-            <p>Note what it does not cover: it clears your messages. It does not clear your profile, your accountant's details, your QuickBooks connection, your Telegram link or your stored draft cards. Those are covered below.</p>
+            <p>Note what it does not cover: it clears your messages. It does not clear your profile, your accountant's details, your QuickBooks connection, your Telegram link or your stored draft cards. Deleting your account, below, removes all of those.</p>
 
             <h3>Deleting your QuickBooks connection</h3>
-            <p>Disconnecting QuickBooks &mdash; either in the app or from inside QuickBooks itself &mdash; deletes the stored tokens and company identifier from our database.</p>
+            <p>You can disconnect QuickBooks from the Tally Voice web dashboard at <a href="https://app.tallyvoice.ai/">app.tallyvoice.ai</a> (there is no disconnect button in the mobile app). Doing so revokes Tally Voice's access with Intuit and deletes the stored tokens and company identifier from our database. You can also remove Tally Voice from inside QuickBooks, under Apps &rarr; Connected apps, which makes our stored tokens useless straight away; our copy of them stays in our database until you disconnect from the dashboard or delete your account.</p>
 
             <h3>Deleting your account and everything in it</h3>
-            <p>There is no button for this yet. Email us at the address in section 13 and ask, and we will delete your account and everything listed in section 7 &mdash; your profile, your accountant's details, your BAS settings, your QuickBooks connection, your Telegram link and your stored draft cards. We do it by hand, and we will confirm when it is done. We would rather tell you it is a manual process than imply there is a self-service switch that does not exist.</p>
+            <p>You can delete your account yourself. In the app, go to <strong>Profile &rarr; Delete account</strong>. Or, from any browser, go to <a href="https://app.tallyvoice.ai/account/delete/">app.tallyvoice.ai/account/delete</a> and log in. Either way you are asked to confirm first, because it is permanent and cannot be undone.</p>
+            <p>Deleting your account removes:</p>
+            <ul>
+              <li>your profile, your accountant's details and your BAS settings;</li>
+              <li>your QuickBooks connection;</li>
+              <li>your Telegram link;</li>
+              <li>your entire conversation history; and</li>
+              <li>any draft invoices, customers or products, including the contact details stored in them.</li>
+            </ul>
+            <p>It also removes the email address and password that make up the account itself.</p>
+            <p><strong>We revoke Tally Voice's access with Intuit</strong> as part of the deletion, so the app also disappears from QuickBooks &rarr; Apps &rarr; Connected apps. If Intuit cannot be reached at that moment, your account is still deleted on our side, and you can remove Tally Voice from Connected apps yourself at any time.</p>
+            <p><strong>Anything already written to your QuickBooks books stays in your books.</strong> Confirmed invoices, customers and products belong to you and are not touched. We only remove what is ours.</p>
+            <p>Nothing is kept for reactivation: there is no soft delete and no way to bring an account back. The one trace that can remain for a short while is the routine infrastructure backup described in section 9, which is destroyed on a schedule. We do not restore individual deleted accounts from backups.</p>
+            <p>If you cannot log in, email us at the address in section 13 and we will delete the account for you.</p>
 
             <h2 id="caveats">9. Two things deletion does not cover</h2>
             <p>Two limits on the above. We are stating them here rather than in a footnote, because you should know about them before you rely on deletion.</p>
 
             <div class="legal-callout">
               <h3>Backups, for up to 28 days</h3>
-              <p>Our infrastructure is backed up weekly, and those backups are destroyed on a 28-day schedule. A message you delete is gone from the live database straight away, but a copy may still exist in a backup for up to 28 days, after which that backup is destroyed too. We do not read backups to answer questions and we do not restore them to recover deleted messages &mdash; they exist so we can bring the service back if something breaks.</p>
+              <p>Our infrastructure is backed up weekly, and those backups are destroyed on a 28-day schedule. A message you delete, or your whole account, is gone from the live database straight away, but a copy may still exist in a backup for up to 28 days, after which that backup is destroyed too. We do not read backups to answer questions and we do not restore them to recover deleted messages &mdash; they exist so we can bring the service back if something breaks.</p>
             </div>
 
             <div class="legal-callout">
-              <h3>The copy sent to Anthropic</h3>
-              <p>The copy of your question that was sent to Anthropic to generate the answer is held under Anthropic's retention policy, not ours. Clearing your chat history clears our copy. It does not reach into Anthropic's systems, and we cannot make it do so.</p>
+              <h3>Copies held by our service providers</h3>
+              <p>Some of what you say or type is sent to other companies so the service can work (section 5). What each of them holds is governed by its own retention policy, not ours:</p>
+              <ul>
+                <li><strong>Anthropic</strong> &mdash; your questions and the recent part of your conversation, sent to write the reply.</li>
+                <li><strong>OpenAI</strong> &mdash; the text of replies read aloud to you; the audio of voice notes you send to the Telegram bot, for transcription; and, if you use OpenAI for live voice, your audio as you speak.</li>
+                <li><strong>Google</strong> &mdash; your audio as you speak, if you use Google (Gemini Live) for live voice.</li>
+              </ul>
+              <p>Clearing your chat history or deleting your account clears our copy. It does not reach into their systems, and we cannot make it do so.</p>
             </div>
 
             <h2 id="rights">10. Your rights under Australian privacy law</h2>
