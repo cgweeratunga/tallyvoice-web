@@ -5,7 +5,7 @@
  *
  *   PALETTE     mapped onto this site's tokens. The source used --teal,
  *               --teal-dark and --text; this site has none of those, so:
- *               --teal -> --green, --teal-dark -> --green-dark,
+ *               --teal -> --blue, --teal-dark -> --blue-dark,
  *               --text -> --ink.
  *
  *   TYPE        h1/h2 sized deliberately BELOW the marketing scale. The
@@ -39,7 +39,7 @@
 
 .section-dark {
   background: var(--navy);
-  color: #fff;
+  color: #ffffff;
 }
 
 /* --- hero ---------------------------------------------------------------- */
@@ -58,12 +58,16 @@
   right: -200px;
   top: -60px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(29, 138, 105, 0.22), transparent 65%);
+  background: radial-gradient(circle, rgba(11, 110, 168, 0.22), transparent 65%);
 }
 
 .legal-hero .container { position: relative; z-index: 2; }
 
-.legal-hero .eyebrow { color: var(--lime); }
+.legal-hero .eyebrow {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--cyan);
+}
 
 .legal-hero h1 {
   font-size: clamp(32px, 4vw, 48px);
@@ -91,7 +95,7 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
-.legal-meta strong { color: #fff; font-weight: 700; }
+.legal-meta strong { color: #ffffff; font-weight: 700; }
 
 /* --- body: wrapping sidebar, no breakpoints ------------------------------ */
 
@@ -133,7 +137,7 @@
 
 .legal-toc a::before {
   content: counter(toc, decimal-leading-zero);
-  color: var(--green-dark);
+  color: var(--blue-dark);
   font-weight: 700;
   font-size: 12px;
   padding-top: 2px;
@@ -179,22 +183,22 @@
 
 .legal-content ul { margin: 0 0 20px; padding-left: 22px; }
 .legal-content li { font-size: 17px; line-height: 1.7; color: var(--ink); margin-bottom: 9px; }
-.legal-content li::marker { color: var(--green-dark); }
+.legal-content li::marker { color: var(--blue-dark); }
 
 .legal-content a:not(.button) {
   color: var(--ink);
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 2px solid var(--green);
+  border-bottom: 2px solid var(--blue);
 }
 
-.legal-content a:not(.button):hover { color: var(--green-dark); }
+.legal-content a:not(.button):hover { color: var(--blue-dark); }
 .legal-content strong { font-weight: 700; color: var(--ink); }
 
 /* --- callouts ------------------------------------------------------------ */
 
 .legal-callout {
-  background: var(--mint);
+  background: var(--sky);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   padding: clamp(20px, 2.4vw, 28px);

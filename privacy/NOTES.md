@@ -38,7 +38,7 @@ filed beside item 13, the sticky-header item it refers to.
 
 **SECURITY - not a policy item. Must not get lost.**
 
-- [ ] 8. QUICKBOOKS OAUTH TOKENS ARE STORED IN PLAINTEXT.
+- [x] 8. QUICKBOOKS OAUTH TOKENS ARE STORED IN PLAINTEXT. - RESOLVED 25 Sep 2026
 - [x] 9. THIRD-PARTY CONTACT DETAILS IN RecordDraft
 
 **BLOCKING - infrastructure**
@@ -162,7 +162,7 @@ filed beside item 13, the sticky-header item it refers to.
 ## SECURITY - not a policy item. Must not get lost.
 
 ```text
-  [ ] 8. QUICKBOOKS OAUTH TOKENS ARE STORED IN PLAINTEXT.
+  [x] 8. QUICKBOOKS OAUTH TOKENS ARE STORED IN PLAINTEXT. - RESOLVED 25 Sep 2026
          Verified 28 Aug 2026: core/models.py QBConnection.refresh_token and
          .access_token are plain CharFields. There is no application-level
          encryption anywhere in the codebase - grep for encrypt / Fernet /
@@ -177,6 +177,17 @@ filed beside item 13, the sticky-header item it refers to.
          Fix is a backend change (field-level encryption with a key supplied
          from the environment, plus a re-encrypt migration for existing rows)
          - out of scope for the policy work, tracked here so it survives.
+
+         RESOLVED 25 Sep 2026. Original text above kept for history.
+         Fixed in pulsebooks c9b87c5 (EncryptedCharField + migrations
+         0011-0013) and 33e3fe1 (model switched to EncryptedCharField),
+         4 Sep 2026. Fernet via MultiFernet, key QB_TOKEN_ENCRYPTION_KEY; the
+         app refuses to start without it.
+         Verified on production 25 Sep 2026: migrations 0011-0014 applied; the
+         only QBConnection row has access_token, refresh_token and realm_id
+         all starting "gAAAAA".
+         The section 2 "encrypted at rest" claim (37da14f) is therefore
+         accurate.
 
   [x] 9. THIRD-PARTY CONTACT DETAILS IN RecordDraft - DISCLOSED 28 Aug 2026.
          RecordDraft.payload for kind="customer" holds a third party's name,
