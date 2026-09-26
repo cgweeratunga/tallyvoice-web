@@ -7,14 +7,14 @@
 # The server is reached through an SSH alias so no address lives in this repo.
 # Add to ~/.ssh/config (NOT committed anywhere):
 #
-#   Host tallyvoice-web
+#   Host tallyvoice_web
 #       HostName <marketing droplet IP - not the app.tallyvoice.ai one>
 #       User root
 #
 # Override with:  TALLYVOICE_HOST=otheralias ./deploy.sh
 set -euo pipefail
 
-HOST="${TALLYVOICE_HOST:-tallyvoice-web}"
+HOST="${TALLYVOICE_HOST:-tallyvoice_web}"
 REMOTE_DIR=/var/www/tallyvoice
 SITE_URL=https://tallyvoice.ai
 
